@@ -1,6 +1,8 @@
 # ĐỒ ÁN KẾT THÚC MÔN - PHÁT TRIỂN ỨNG DỤNG WEB
 ## Đề tài: Mạng xã hội - Nhóm 07
 
+### Tên đề tài: PetConnect
+
 ### Mô tả đề tài
 Xây dựng một nền tảng mạng xã hội cơ bản cho phép người dùng đăng ký, kết bạn, chia sẻ bài viết và tương tác qua lại. Hệ thống sử dụng PHP (OOP + MVC), Bootstrap và AJAX.
 
