@@ -4,7 +4,7 @@
 ### Tên đề tài: PetConnect
 
 ### Mô tả đề tài
-Xây dựng một nền tảng mạng xã hội cơ bản cho phép người dùng đăng ký, kết bạn, chia sẻ bài viết và tương tác qua lại. Hệ thống sử dụng PHP (OOP + MVC), Bootstrap và AJAX.
+Xây dựng một nền tảng mạng xã hội cơ bản cho phép người dùng đăng ký, kết bạn, chia sẻ bài viết và tương tác qua lại, kết nối thú cưng. Hệ thống sử dụng PHP (OOP + MVC), Bootstrap và AJAX.
 
 ### Thành viên nhóm
 1. Nguyễn Gia Hân - @ghannguyen
