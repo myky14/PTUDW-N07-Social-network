@@ -1,0 +1,61 @@
+@model Archive.Web.ViewModels.Profile.EditProfileViewModel
+@{
+    ViewData["Title"] = "Chỉnh sửa hồ sơ";
+}
+
+<section class="page-shell narrow-page">
+    <div class="archive-card edit-shell-card">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow-pill">Chỉnh hồ sơ</span>
+                <h1 class="page-title mt-3">Làm hồ sơ gọn và đẹp hơn</h1>
+            </div>
+            <div class="soft-inline-note">Một avatar, một bio ngắn và đúng mood là đủ.</div>
+        </div>
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="row g-4 align-items-start">
+                <div class="col-md-4">
+                    <div class="avatar-upload-card">
+                        @if (!string.IsNullOrWhiteSpace(Model.CurrentAvatarUrl))
+                        {
+                            <img src="@Model.CurrentAvatarUrl" class="profile-avatar w-100 square-avatar" alt="Avatar hiện tại" />
+                        }
+                        else
+                        {
+                            <div class="profile-avatar avatar-fallback square-avatar">A</div>
+                        }
+                        <div class="mt-3">
+                            <label asp-for="AvatarFile" class="form-label">Tải avatar</label>
+                            <input asp-for="AvatarFile" class="form-control form-control-soft" accept="image/*" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <label asp-for="DisplayName" class="form-label"></label>
+                        <input asp-for="DisplayName" class="form-control form-control-soft" />
+                        <span asp-validation-for="DisplayName" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Bio" class="form-label"></label>
+                        <textarea asp-for="Bio" class="form-control form-control-soft" rows="5"></textarea>
+                        <span asp-validation-for="Bio" class="text-danger small"></span>
+                    </div>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">
+                            <svg class="icon"><use href="#i-edit"></use></svg>
+                            <span>Cập nhật</span>
+                        </button>
+                        <a asp-action="Details" asp-route-userName="@User.Identity?.Name" class="btn btn-soft rounded-pill px-4">Quay lại</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

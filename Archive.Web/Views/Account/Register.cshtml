@@ -1,0 +1,60 @@
+@model Archive.Web.ViewModels.Account.RegisterViewModel
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+<section class="auth-shell">
+    <div class="row g-4 align-items-stretch">
+        <div class="col-lg-5">
+            <div class="archive-card auth-intro h-100">
+                <span class="eyebrow-pill">Bắt đầu</span>
+                <h1>Tạo góc nhỏ của riêng bạn</h1>
+                <p>Chỉ cần vài thông tin ngắn là đủ để vào một feed gọn, hiện đại và dịu mắt hơn.</p>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="archive-card auth-form-card h-100">
+                <h2 class="mb-4">Đăng ký tài khoản</h2>
+                <form asp-action="Register" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label asp-for="UserName" class="form-label"></label>
+                            <input asp-for="UserName" class="form-control form-control-soft" placeholder="linh" />
+                            <span asp-validation-for="UserName" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="DisplayName" class="form-label"></label>
+                            <input asp-for="DisplayName" class="form-control form-control-soft" placeholder="Linh An" />
+                            <span asp-validation-for="DisplayName" class="text-danger small"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control form-control-soft" placeholder="linh@archive.local" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" class="form-control form-control-soft" placeholder="Ít nhất 6 ký tự" />
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="ConfirmPassword" class="form-label"></label>
+                            <input asp-for="ConfirmPassword" class="form-control form-control-soft" placeholder="Nhập lại mật khẩu" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 mt-4">
+                        <svg class="icon"><use href="#i-plus"></use></svg>
+                        <span>Tạo tài khoản</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

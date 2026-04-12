@@ -1,0 +1,75 @@
+@model Archive.Web.ViewModels.Profile.ProfilePageViewModel
+@{
+    ViewData["Title"] = Model.DisplayName;
+}
+
+<section class="page-shell">
+    <div class="profile-hero archive-card">
+        <div class="profile-top">
+            <div class="d-flex gap-4 align-items-center flex-wrap">
+                @if (!string.IsNullOrWhiteSpace(Model.AvatarUrl))
+                {
+                    <img src="@Model.AvatarUrl" alt="@Model.DisplayName" class="profile-avatar" />
+                }
+                else
+                {
+                    <div class="profile-avatar avatar-fallback">@string.Join("", Model.DisplayName.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(x => x[0])).ToUpperInvariant()</div>
+                }
+                <div>
+                    <span class="eyebrow-pill">Profile</span>
+                    <h1 class="page-title mb-1 mt-3">@Model.DisplayName</h1>
+                    <div class="post-meta fs-6">@@@Model.UserName</div>
+                    <p class="profile-bio mt-3 mb-0">@Model.Bio</p>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 flex-wrap">
+                @if (Model.IsCurrentUser)
+                {
+                    <a asp-action="Edit" class="btn btn-primary rounded-pill px-4">
+                        <svg class="icon"><use href="#i-edit"></use></svg>
+                        <span>Sửa hồ sơ</span>
+                    </a>
+                }
+                else if (User.Identity?.IsAuthenticated == true)
+                {
+                    <button type="button" class="btn btn-soft rounded-pill px-4 follow-button" data-follow-button data-user-id="@Model.Id">
+                        @(Model.IsFollowing ? "Đang theo dõi" : "Theo dõi")
+                    </button>
+                    <form asp-controller="Reports" asp-action="UserReport" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="targetUserId" value="@Model.Id" />
+                        <input type="hidden" name="reason" value="Tài khoản cần kiểm tra" />
+                        <button type="submit" class="btn btn-outline-danger rounded-pill px-4">
+                            <svg class="icon"><use href="#i-report"></use></svg>
+                            <span>Báo cáo</span>
+                        </button>
+                    </form>
+                }
+            </div>
+        </div>
+
+        <div class="profile-stats">
+            <div><strong>@Model.PostCount</strong><span>bài viết</span></div>
+            <div><strong data-followers-count>@Model.FollowersCount</strong><span>người theo dõi</span></div>
+            <div><strong>@Model.FollowingCount</strong><span>đang theo dõi</span></div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        @if (Model.Posts.Count == 0)
+        {
+            <div class="archive-card empty-state-card">
+                <h3>Chưa có bài viết</h3>
+                <p>Hồ sơ này vẫn đang khá yên.</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var post in Model.Posts)
+            {
+                <partial name="Partials/_PostCard" model="post" />
+            }
+        }
+    </div>
+</section>

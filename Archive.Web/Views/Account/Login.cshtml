@@ -1,0 +1,51 @@
+@model Archive.Web.ViewModels.Account.LoginViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<section class="auth-shell">
+    <div class="row g-4 align-items-stretch">
+        <div class="col-lg-5">
+            <div class="archive-card auth-intro h-100">
+                <span class="eyebrow-pill">Một nơi để nói khẽ</span>
+                <h1>Trở lại với feed của bạn</h1>
+                <p>Đăng nhập để tiếp tục viết, lướt và giữ lại những điều nhỏ vừa đủ đáng nhớ.</p>
+                <div class="soft-panel mt-4">
+                    <strong>Tài khoản demo</strong>
+                    <div class="small mt-2">Admin: <code>admin@archive.local</code> / <code>Admin@123</code></div>
+                    <div class="small">User: <code>linh@archive.local</code> / <code>User@123</code></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="archive-card auth-form-card h-100">
+                <h2 class="mb-4">Đăng nhập</h2>
+                <form asp-action="Login" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control form-control-soft" placeholder="you@archive.local" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control form-control-soft" placeholder="••••••••" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 mt-4">
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">
+                            <svg class="icon"><use href="#i-arrow-right"></use></svg>
+                            <span>Vào feed</span>
+                        </button>
+                        <a asp-action="Register" class="btn btn-soft rounded-pill px-4">Tạo tài khoản</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

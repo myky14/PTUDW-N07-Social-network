@@ -1,0 +1,73 @@
+@model Archive.Web.ViewModels.Search.SearchPageViewModel
+@{
+    ViewData["Title"] = "Tìm kiếm";
+}
+
+<section class="page-shell">
+    <div class="archive-card">
+        <form asp-action="Index" method="get" class="search-page-form">
+            <input type="search" name="q" value="@Model.Query" class="form-control form-control-soft search-page-input" placeholder="Tìm người dùng, nội dung hoặc hashtag..." />
+            <button type="submit" class="btn btn-primary rounded-pill px-4">
+                <svg class="icon"><use href="#i-search"></use></svg>
+                <span>Tìm</span>
+            </button>
+        </form>
+    </div>
+
+    @if (string.IsNullOrWhiteSpace(Model.Query))
+    {
+        <div class="archive-card empty-state-card mt-4">
+            <h3>Tìm một điều gì đó</h3>
+            <p>Username, tên hiển thị, vài chữ trong bài viết hoặc hashtag đều được.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4 mt-1">
+            <div class="col-lg-4">
+                <div class="archive-card h-100">
+                    <h3 class="sidebar-title mb-3">Người dùng</h3>
+                    @if (Model.Users.Count == 0)
+                    {
+                        <p class="mb-0 text-muted">Không tìm thấy người dùng phù hợp.</p>
+                    }
+                    else
+                    {
+                        @foreach (var user in Model.Users)
+                        {
+                            <div class="suggestion-row align-items-start">
+                                <div>
+                                    <a asp-controller="Profiles" asp-action="Details" asp-route-userName="@user.UserName" class="post-display-name">@user.DisplayName</a>
+                                    <div class="post-meta">@@@user.UserName</div>
+                                    <p class="small mt-2 mb-0 text-muted">@user.Bio</p>
+                                </div>
+                                @if (User.Identity?.IsAuthenticated == true)
+                                {
+                                    <button type="button" class="btn btn-soft btn-sm rounded-pill follow-button" data-follow-button data-user-id="@user.Id">
+                                        @(user.IsFollowing ? "Đang theo dõi" : "Theo dõi")
+                                    </button>
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-lg-8">
+                @if (Model.Posts.Count == 0)
+                {
+                    <div class="archive-card empty-state-card">
+                        <h3>Không có bài viết phù hợp</h3>
+                        <p>Thử từ khóa ngắn hơn hoặc tìm bằng hashtag.</p>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var post in Model.Posts)
+                    {
+                        <partial name="Partials/_PostCard" model="post" />
+                    }
+                }
+            </div>
+        </div>
+    }
+</section>
