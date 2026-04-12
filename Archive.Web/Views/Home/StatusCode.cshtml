@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Lỗi";
+    var statusCode = ViewBag.StatusCode as int? ?? 500;
+}
+
+<section class="page-shell narrow-page">
+    <div class="archive-card empty-state-card text-center">
+        <span class="empty-badge">@statusCode</span>
+        <h1>Trang bạn tìm hiện không sẵn sàng</h1>
+        <p>Liên kết có thể đã thay đổi hoặc dữ liệu không còn tồn tại.</p>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-soft rounded-pill px-4">
+            <svg class="icon"><use href="#i-home"></use></svg>
+            <span>Về lại ARCHIVE</span>
+        </a>
+    </div>
+</section>

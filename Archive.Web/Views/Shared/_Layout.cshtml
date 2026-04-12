@@ -1,0 +1,107 @@
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+    var area = ViewContext.RouteData.Values["area"]?.ToString();
+    var isAdminArea = string.Equals(area, "Admin", StringComparison.OrdinalIgnoreCase);
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ARCHIVE</title>
+    <meta name="theme-color" content="#f6ede8" />
+    <meta name="csrf-token" content="@requestToken" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Archive.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <partial name="Partials/_IconSprite" />
+    <div class="archive-shell">
+        <header class="archive-topbar">
+            <div class="container archive-topbar-inner">
+                <div class="archive-topbar-left">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Feed" asp-action="Index" class="archive-plain-link">NHỊP NHẸ</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Home" asp-action="About" class="archive-plain-link">ARCHIVE</a>
+                    }
+                </div>
+
+                <a class="archive-brand archive-brand-center" asp-controller="Home" asp-action="Index" aria-label="ARCHIVE">
+                    <span class="archive-brand-mark">
+                        <svg class="icon"><use href="#i-spark"></use></svg>
+                    </span>
+                    <span class="visually-hidden">ARCHIVE</span>
+                </a>
+
+                <nav class="archive-topnav">
+                    <a asp-controller="Search" asp-action="Index" class="topnav-link topnav-link-icon" title="Tìm kiếm" aria-label="Tìm kiếm">
+                        <svg class="icon"><use href="#i-search"></use></svg>
+                        <span class="visually-hidden">Tìm kiếm</span>
+                    </a>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Feed" asp-action="Index" asp-fragment="composer" class="topnav-link topnav-link-icon" title="Tạo bài viết" aria-label="Tạo bài viết">
+                            <svg class="icon"><use href="#i-plus"></use></svg>
+                            <span class="visually-hidden">Tạo bài viết</span>
+                        </a>
+                        <a asp-controller="Profiles" asp-action="Details" asp-route-userName="@User.Identity?.Name" class="topnav-link topnav-link-icon" title="Hồ sơ" aria-label="Hồ sơ">
+                            <svg class="icon"><use href="#i-user"></use></svg>
+                            <span class="visually-hidden">Hồ sơ</span>
+                        </a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="topnav-link topnav-link-icon @(isAdminArea ? "is-active" : string.Empty)" title="Quản trị" aria-label="Quản trị">
+                                <svg class="icon"><use href="#i-admin"></use></svg>
+                                <span class="visually-hidden">Quản trị</span>
+                            </a>
+                        }
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-soft btn-sm topnav-button topnav-link-icon" title="Đăng xuất" aria-label="Đăng xuất">
+                                <svg class="icon"><use href="#i-logout"></use></svg>
+                                <span class="visually-hidden">Đăng xuất</span>
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-controller="Home" asp-action="About" class="topnav-link topnav-link-icon" title="Giới thiệu" aria-label="Giới thiệu">
+                            <svg class="icon"><use href="#i-spark"></use></svg>
+                            <span class="visually-hidden">Giới thiệu</span>
+                        </a>
+                        <a asp-controller="Account" asp-action="Login" class="topnav-link">
+                            <svg class="icon"><use href="#i-user"></use></svg>
+                            <span>Đăng nhập</span>
+                        </a>
+                        <a asp-controller="Account" asp-action="Register" class="btn btn-soft btn-sm topnav-button">
+                            <svg class="icon"><use href="#i-plus"></use></svg>
+                            <span>Bắt đầu</span>
+                        </a>
+                    }
+                </nav>
+            </div>
+        </header>
+
+        <main class="archive-main">
+            <div class="container">
+                <partial name="Partials/_FlashMessages" />
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

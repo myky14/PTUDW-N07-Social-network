@@ -1,0 +1,105 @@
+@model Archive.Web.ViewModels.Shared.LandingPageViewModel
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<section class="landing-hero">
+    <div class="hero-stage">
+        <span class="eyebrow-pill">Một nơi để nói khẽ</span>
+        <div class="hero-doodles">
+            <span class="hero-doodle hero-doodle-a"><svg class="icon"><use href="#i-spark"></use></svg></span>
+            <span class="hero-doodle hero-doodle-b"><svg class="icon"><use href="#i-spark"></use></svg></span>
+            <span class="hero-doodle hero-doodle-c"><svg class="icon"><use href="#i-spark"></use></svg></span>
+        </div>
+        <h1 class="hero-wordmark">ARCHIVE</h1>
+        <p class="hero-note">
+            Viết vài dòng ngắn, giữ lại vài cảm xúc nhỏ và lướt trong một không gian gọn, nhẹ, mềm.
+        </p>
+        <div class="hero-divider"></div>
+        <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+            <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg rounded-pill px-4">
+                <span>Bắt đầu</span>
+            </a>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-soft btn-lg rounded-pill px-4">
+                <span>Đăng nhập</span>
+            </a>
+        </div>
+        <div class="landing-stats justify-content-center">
+            <div class="stat-pill">
+                <strong>@Model.UserCount+</strong>
+                <span>người dùng mẫu</span>
+            </div>
+            <div class="stat-pill">
+                <strong>@Model.PostCount+</strong>
+                <span>bài viết</span>
+            </div>
+            <div class="stat-pill">
+                <strong>@Model.TopicCount</strong>
+                <span>chủ đề</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="landing-section">
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow-pill">Xem nhanh</span>
+            <h2>Một góc ARCHIVE</h2>
+        </div>
+        <a asp-controller="Home" asp-action="About" class="btn btn-soft rounded-pill">
+            <span>Xem thêm</span>
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var post in Model.FeaturedPosts)
+        {
+            <div class="col-lg-6">
+                <article class="archive-card h-100 preview-card">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="avatar-circle avatar-fallback">@string.Join("", post.DisplayName.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(x => x[0])).ToUpperInvariant()</div>
+                        <div>
+                            <div class="post-display-name">@post.DisplayName</div>
+                            <div class="post-meta">@@@post.UserName</div>
+                        </div>
+                    </div>
+                    <p class="post-content">@post.Content</p>
+                    @if (!string.IsNullOrWhiteSpace(post.ImageUrl))
+                    {
+                        <img src="@post.ImageUrl" class="post-cover-image" alt="Preview image" />
+                    }
+                    <div class="d-flex gap-2 flex-wrap mt-3">
+                        @foreach (var tag in post.Hashtags)
+                        {
+                            <span class="hashtag-chip">#@tag</span>
+                        }
+                    </div>
+                </article>
+            </div>
+        }
+    </div>
+</section>
+
+<section class="landing-section">
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="archive-card feature-card">
+                <h3>Khung gọn</h3>
+                <p>Nhiều đường line mảnh, khoảng trắng rộng và nhịp nhìn rõ hơn.</p>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="archive-card feature-card">
+                <h3>Font mềm</h3>
+                <p>Rounded sans hiện đại, nhẹ mắt và có chất gần hơn với tinh thần boutique.</p>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="archive-card feature-card">
+                <h3>Vibe dịu</h3>
+                <p>Màu kem, hồng be và vài doodle nhỏ để tạo chất riêng nhưng không áp đảo feed.</p>
+            </div>
+        </div>
+    </div>
+</section>
