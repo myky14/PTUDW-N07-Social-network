@@ -1,0 +1,141 @@
+@model Archive.Web.ViewModels.Feed.FeedPageViewModel
+@{
+    ViewData["Title"] = "Home Feed";
+}
+
+<section class="feed-layout">
+    <aside class="left-sidebar">
+        <div class="archive-card sidebar-card">
+            <div class="sidebar-heading">Menu</div>
+            <nav class="sidebar-nav">
+                <a asp-controller="Feed" asp-action="Index" class="active">
+                    <svg class="icon"><use href="#i-home"></use></svg>
+                    <span>Home</span>
+                </a>
+                <a asp-controller="Profiles" asp-action="Details" asp-route-userName="@User.Identity?.Name">
+                    <svg class="icon"><use href="#i-user"></use></svg>
+                    <span>Profile</span>
+                </a>
+                <a asp-controller="Search" asp-action="Index">
+                    <svg class="icon"><use href="#i-search"></use></svg>
+                    <span>Tìm</span>
+                </a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                        <svg class="icon"><use href="#i-admin"></use></svg>
+                        <span>Quản trị</span>
+                    </a>
+                }
+            </nav>
+        </div>
+
+        <div class="archive-card sidebar-card">
+            <div class="sidebar-heading">Vibe</div>
+            <p class="mb-0">Nhẹ, sạch, ít chữ.</p>
+        </div>
+    </aside>
+
+    <div class="feed-center">
+        @if (Model.TrendingTopics.Count > 0)
+        {
+            <div class="archive-card archive-chip-strip">
+                <div class="topic-chip-row">
+                    @foreach (var topic in Model.TrendingTopics)
+                    {
+                        <a asp-controller="Search" asp-action="Index" asp-route-q="@topic.Slug" class="topic-filter-chip">#@topic.Name</a>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="archive-card composer-card" id="composer">
+            <div class="d-flex justify-content-between align-items-center mb-3 gap-3 flex-wrap">
+                <div>
+                    <span class="eyebrow-pill">Ghi nhanh</span>
+                    <h2 class="feed-heading mb-0 mt-2">Một dòng là đủ</h2>
+                </div>
+                <div class="composer-badge" aria-hidden="true">
+                    <svg class="icon"><use href="#i-plus"></use></svg>
+                    <span>Tạo</span>
+                </div>
+            </div>
+            <form asp-controller="Posts" asp-action="Create" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <textarea name="Content" class="form-control form-control-soft composer-textarea" placeholder="Bạn đang nghĩ gì?">@Model.Composer.Content</textarea>
+                <span asp-validation-for="Composer.Content" class="text-danger small"></span>
+                <div class="composer-toolbar">
+                    <select name="TopicId" asp-items="Model.Composer.TopicOptions" class="form-select form-control-soft">
+                        <option value="">Chủ đề</option>
+                    </select>
+                    <input name="ImageFile" type="file" class="form-control form-control-soft" accept="image/*" />
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">
+                        <svg class="icon"><use href="#i-plus"></use></svg>
+                        <span>Đăng</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="feedList">
+            @if (Model.Posts.Count == 0)
+            {
+                <div class="archive-card empty-state-card">
+                    <h3>Feed đang hơi yên</h3>
+                    <p>Đăng một bài đầu tiên hoặc theo dõi vài người để lấp đầy nhịp đọc của bạn.</p>
+                </div>
+            }
+            else
+            {
+                @foreach (var post in Model.Posts)
+                {
+                    <partial name="Partials/_PostCard" model="post" />
+                }
+            }
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="button" class="btn btn-soft rounded-pill px-4" id="loadMoreButton" data-skip="@Model.Posts.Count">Xem thêm</button>
+        </div>
+    </div>
+
+    <aside class="right-sidebar">
+        <div class="archive-card sidebar-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="sidebar-title">Gợi ý</h3>
+            </div>
+            @if (Model.Suggestions.Count == 0)
+            {
+                <p class="mb-0 text-muted">Bạn đang theo dõi khá đủ rồi.</p>
+            }
+            else
+            {
+                @foreach (var user in Model.Suggestions)
+                {
+                    <div class="suggestion-row">
+                        <div>
+                            <a asp-controller="Profiles" asp-action="Details" asp-route-userName="@user.UserName" class="post-display-name">@user.DisplayName</a>
+                            <div class="post-meta">@@@user.UserName</div>
+                        </div>
+                        <button type="button" class="btn btn-soft btn-sm rounded-pill follow-button" data-follow-button data-user-id="@user.Id">Theo dõi</button>
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="archive-card sidebar-card">
+            <h3 class="sidebar-title mb-3">Topic</h3>
+            @foreach (var topic in Model.TrendingTopics)
+            {
+                <a asp-controller="Search" asp-action="Index" asp-route-q="@topic.Slug" class="trending-row">
+                    <span>#@topic.Slug</span>
+                    <strong>@topic.PostCount</strong>
+                </a>
+            }
+        </div>
+    </aside>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

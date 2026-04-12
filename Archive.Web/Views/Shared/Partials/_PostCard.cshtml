@@ -1,0 +1,116 @@
+@model Archive.Web.ViewModels.Shared.PostCardViewModel
+@{
+    var initials = string.Join("", Model.DisplayName.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(x => x[0])).ToUpperInvariant();
+}
+
+<article class="archive-card post-card" data-post-card data-post-id="@Model.Id">
+    <div class="post-card-shell">
+        <div class="post-card-header">
+            <div class="post-card-identity">
+                <a asp-controller="Profiles" asp-action="Details" asp-route-userName="@Model.UserName" class="text-decoration-none">
+                    @if (!string.IsNullOrWhiteSpace(Model.AvatarUrl))
+                    {
+                        <img src="@Model.AvatarUrl" alt="@Model.DisplayName" class="avatar-circle" />
+                    }
+                    else
+                    {
+                        <div class="avatar-circle avatar-fallback">@initials</div>
+                    }
+                </a>
+
+                <div class="post-card-author">
+                    <div class="post-meta-line">
+                        <a asp-controller="Profiles" asp-action="Details" asp-route-userName="@Model.UserName" class="post-display-name">@Model.DisplayName</a>
+                        <span class="post-handle">@@@Model.UserName</span>
+                    </div>
+                    <div class="post-subline">
+                        <span class="post-time">@Model.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</span>
+                        @if (!string.IsNullOrWhiteSpace(Model.TopicName))
+                        {
+                            <span class="topic-pill">@Model.TopicName</span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.IsOwnedByCurrentUser)
+            {
+                <div class="post-card-tools">
+                    <a asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Id" class="icon-tool-button" title="Sửa bài viết" aria-label="Sửa bài viết">
+                        <svg class="icon"><use href="#i-edit"></use></svg>
+                        <span class="visually-hidden">Sửa</span>
+                    </a>
+                    <form asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="icon-tool-button danger" title="Ẩn bài viết" aria-label="Ẩn bài viết" onclick="return confirm('Ẩn bài viết này khỏi feed?');">
+                            <svg class="icon"><use href="#i-trash"></use></svg>
+                            <span class="visually-hidden">Xóa</span>
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+
+        <div class="post-card-body">
+            <p class="post-content">@Model.Content</p>
+
+            @if (Model.Hashtags.Count > 0)
+            {
+                <div class="post-tag-row">
+                    @foreach (var tag in Model.Hashtags)
+                    {
+                        <a asp-controller="Search" asp-action="Index" asp-route-q="@tag" class="hashtag-chip">#@tag</a>
+                    }
+                </div>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+            {
+                <div class="post-media-frame">
+                    <img src="@Model.ImageUrl" alt="Ảnh bài viết" class="post-cover-image" />
+                </div>
+            }
+
+            @if (Model.QuotedPost is not null)
+            {
+                <div class="quote-card mt-3">
+                    <div class="quote-card-meta">
+                        <svg class="icon"><use href="#i-quote"></use></svg>
+                        <span>@@@Model.QuotedPost.UserName</span>
+                    </div>
+                    <div class="fw-semibold">@Model.QuotedPost.DisplayName</div>
+                    <div class="quote-card-text">@Model.QuotedPost.Content</div>
+                    @if (!string.IsNullOrWhiteSpace(Model.QuotedPost.ImageUrl))
+                    {
+                        <div class="post-media-frame mt-3">
+                            <img src="@Model.QuotedPost.ImageUrl" alt="Ảnh quote" class="post-cover-image" />
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="post-actions post-footer-strip">
+            <button type="button" class="post-action-button @(Model.IsLikedByCurrentUser ? "active" : "")" data-like-button data-post-id="@Model.Id" title="Thích" aria-label="Thích">
+                <svg class="icon"><use href="#i-heart"></use></svg>
+                <span class="visually-hidden">Thích</span>
+                <strong data-like-count>@Model.LikeCount</strong>
+            </button>
+            <a asp-controller="Posts" asp-action="Details" asp-route-id="@Model.Id" class="post-action-button" title="Bình luận" aria-label="Bình luận">
+                <svg class="icon"><use href="#i-comment"></use></svg>
+                <span class="visually-hidden">Bình luận</span>
+                <strong>@Model.CommentCount</strong>
+            </a>
+            <button type="button" class="post-action-button @(Model.IsRepostedByCurrentUser ? "active" : "")" data-repost-button data-post-id="@Model.Id" title="Repost" aria-label="Repost">
+                <svg class="icon"><use href="#i-repost"></use></svg>
+                <span class="visually-hidden">Repost</span>
+                <strong data-repost-count>@Model.RepostCount</strong>
+            </button>
+            <a asp-controller="Posts" asp-action="Details" asp-route-id="@Model.Id" asp-fragment="quote-box" class="post-action-button" title="Quote" aria-label="Quote">
+                <svg class="icon"><use href="#i-quote"></use></svg>
+                <span class="visually-hidden">Quote</span>
+                <strong>+</strong>
+            </a>
+        </div>
+    </div>
+</article>

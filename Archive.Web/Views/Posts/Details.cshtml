@@ -1,0 +1,127 @@
+@model Archive.Web.ViewModels.Feed.PostDetailPageViewModel
+@{
+    ViewData["Title"] = "Chi tiết bài viết";
+}
+
+<section class="page-shell">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <partial name="Partials/_PostCard" model="Model.Post" />
+
+            <div class="archive-card mt-4" id="quote-box">
+                <span class="eyebrow-pill">Quote</span>
+                <h3 class="mt-3">Viết thêm một nhịp</h3>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <form asp-controller="Posts" asp-action="Create" method="post" enctype="multipart/form-data" class="mt-3">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="QuotePostId" value="@Model.QuoteComposer.QuotePostId" />
+                        <textarea name="Content" class="form-control form-control-soft composer-textarea" placeholder="Bạn muốn thêm gì vào cuộc trò chuyện này?">@Model.QuoteComposer.Content</textarea>
+                        <div class="composer-toolbar">
+                            <select name="TopicId" asp-items="Model.QuoteComposer.TopicOptions" class="form-select form-control-soft">
+                                <option value="">Chủ đề</option>
+                            </select>
+                            <input name="ImageFile" type="file" class="form-control form-control-soft" accept="image/*" />
+                            <button type="submit" class="btn btn-primary rounded-pill px-4">
+                                <svg class="icon"><use href="#i-quote"></use></svg>
+                                <span>Đăng quote</span>
+                            </button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <p class="mb-0 mt-3">Đăng nhập để quote bài viết này.</p>
+                }
+            </div>
+
+            <div class="archive-card mt-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div>
+                        <span class="eyebrow-pill">Bình luận</span>
+                        <h3 class="mt-3 mb-0">Cuộc trò chuyện</h3>
+                    </div>
+                    <button type="button" class="btn btn-soft rounded-pill" data-refresh-comments data-post-id="@Model.Post.Id">
+                        <svg class="icon"><use href="#i-repost"></use></svg>
+                        <span>Làm mới</span>
+                    </button>
+                </div>
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <form method="post" class="comment-form mt-4" data-comment-form data-post-id="@Model.Post.Id">
+                        @Html.AntiForgeryToken()
+                        <div class="row g-3">
+                            <div class="col-md-9">
+                                <textarea class="form-control form-control-soft" name="content" rows="3" placeholder="Viết một bình luận ngắn..."></textarea>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary rounded-pill w-100">
+                                    <svg class="icon"><use href="#i-comment"></use></svg>
+                                    <span>Gửi</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="soft-panel mt-4">
+                        <a asp-controller="Account" asp-action="Login">Đăng nhập</a> để bình luận cho bài viết này.
+                    </div>
+                }
+
+                <div class="comments-wrap mt-4" id="commentsContainer" data-comments-container data-post-id="@Model.Post.Id">
+                    @if (Model.Comments.Count == 0)
+                    {
+                        <div class="soft-panel">Chưa có bình luận nào. Bạn có thể là người đầu tiên để lại vài dòng.</div>
+                    }
+                    else
+                    {
+                        @foreach (var comment in Model.Comments)
+                        {
+                            <div class="comment-row">
+                                <div class="avatar-circle avatar-fallback small-avatar">@string.Join("", comment.DisplayName.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(x => x[0])).ToUpperInvariant()</div>
+                                <div>
+                                    <div class="comment-author">@comment.DisplayName <span>@@@comment.UserName</span></div>
+                                    <p>@comment.Content</p>
+                                    <small>@comment.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</small>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="archive-card sidebar-card">
+                <span class="eyebrow-pill">Báo cáo</span>
+                <h3 class="mt-3">Cần kiểm tra bài viết này?</h3>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <form asp-controller="Reports" asp-action="PostReport" method="post" class="mt-3">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="postId" value="@Model.Post.Id" />
+                        <div class="mb-3">
+                            <label class="form-label">Lý do</label>
+                            <input type="text" name="reason" class="form-control form-control-soft" placeholder="Spam, nội dung không phù hợp..." required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Chi tiết</label>
+                            <textarea name="details" class="form-control form-control-soft" rows="4" placeholder="Mô tả ngắn nếu cần"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-outline-danger rounded-pill px-4">
+                            <svg class="icon"><use href="#i-report"></use></svg>
+                            <span>Gửi</span>
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <p class="mb-0 mt-3">Đăng nhập để gửi báo cáo.</p>
+                }
+            </div>
+        </div>
+    </div>
+</section>
