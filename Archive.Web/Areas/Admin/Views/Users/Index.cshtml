@@ -1,0 +1,72 @@
+@model List<Archive.Web.ViewModels.Admin.AdminUserRowViewModel>
+@{
+    ViewData["Title"] = "Quản lý users";
+}
+
+<section class="page-shell">
+    <div class="admin-header">
+        <div>
+            <span class="eyebrow-pill">Quản trị</span>
+            <h1 class="page-title mt-3">Quản lý người dùng</h1>
+        </div>
+        <div class="admin-nav">
+            <a asp-controller="Dashboard" asp-action="Index"><svg class="icon"><use href="#i-grid"></use></svg><span>Tổng quan</span></a>
+            <a asp-controller="Users" asp-action="Index" class="active"><svg class="icon"><use href="#i-users"></use></svg><span>Người dùng</span></a>
+            <a asp-controller="Posts" asp-action="Index"><svg class="icon"><use href="#i-comment"></use></svg><span>Bài viết</span></a>
+            <a asp-controller="Topics" asp-action="Index"><svg class="icon"><use href="#i-tag"></use></svg><span>Chủ đề</span></a>
+        </div>
+    </div>
+
+    <div class="archive-card admin-table-card">
+        <div class="table-responsive">
+            <table class="table admin-table align-middle">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Tên hiển thị</th>
+                        <th>Email</th>
+                        <th>Vai trò</th>
+                        <th>Bài</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.Id</td>
+                            <td>@@@user.UserName</td>
+                            <td>@user.DisplayName</td>
+                            <td>@user.Email</td>
+                            <td>@user.RoleName</td>
+                            <td>@user.PostCount</td>
+                            <td>
+                                @if (user.IsLocked)
+                                {
+                                    <span class="badge text-bg-danger rounded-pill">Đã khóa</span>
+                                }
+                                else
+                                {
+                                    <span class="badge text-bg-success rounded-pill">Hoạt động</span>
+                                }
+                            </td>
+                            <td>
+                                @if (user.RoleName != "Admin")
+                                {
+                                    <form asp-action="ToggleLock" asp-route-id="@user.Id" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-soft btn-sm rounded-pill">
+                                            @(user.IsLocked ? "Mở khóa" : "Khóa")
+                                        </button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,70 @@
+@model List<Archive.Web.ViewModels.Admin.AdminPostRowViewModel>
+@{
+    ViewData["Title"] = "Quản lý posts";
+}
+
+<section class="page-shell">
+    <div class="admin-header">
+        <div>
+            <span class="eyebrow-pill">Quản trị</span>
+            <h1 class="page-title mt-3">Quản lý bài viết</h1>
+        </div>
+        <div class="admin-nav">
+            <a asp-controller="Dashboard" asp-action="Index"><svg class="icon"><use href="#i-grid"></use></svg><span>Tổng quan</span></a>
+            <a asp-controller="Users" asp-action="Index"><svg class="icon"><use href="#i-users"></use></svg><span>Người dùng</span></a>
+            <a asp-controller="Posts" asp-action="Index" class="active"><svg class="icon"><use href="#i-comment"></use></svg><span>Bài viết</span></a>
+            <a asp-controller="Topics" asp-action="Index"><svg class="icon"><use href="#i-tag"></use></svg><span>Chủ đề</span></a>
+        </div>
+    </div>
+
+    <div class="archive-card admin-table-card">
+        <div class="table-responsive">
+            <table class="table admin-table align-middle">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tác giả</th>
+                        <th>Nội dung</th>
+                        <th>Tim</th>
+                        <th>Bình luận</th>
+                        <th>Hiển thị</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var post in Model)
+                    {
+                        <tr>
+                            <td>@post.Id</td>
+                            <td>
+                                <div class="fw-semibold">@post.DisplayName</div>
+                                <div class="small text-muted">@@@post.UserName</div>
+                            </td>
+                            <td class="admin-post-content">@post.Content</td>
+                            <td>@post.LikeCount</td>
+                            <td>@post.CommentCount</td>
+                            <td>
+                                @if (post.IsHidden)
+                                {
+                                    <span class="badge text-bg-warning rounded-pill">Đã ẩn</span>
+                                }
+                                else
+                                {
+                                    <span class="badge text-bg-success rounded-pill">Hiển thị</span>
+                                }
+                            </td>
+                            <td>
+                                <form asp-action="ToggleVisibility" asp-route-id="@post.Id" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-soft btn-sm rounded-pill">
+                                        @(post.IsHidden ? "Hiện lại" : "Ẩn bài")
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

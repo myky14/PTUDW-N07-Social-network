@@ -1,0 +1,30 @@
+@model Archive.Web.ViewModels.Admin.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<section class="page-shell">
+    <div class="admin-header">
+        <div>
+            <span class="eyebrow-pill">Quản trị</span>
+            <h1 class="page-title mt-3">Tổng quan hệ thống</h1>
+        </div>
+        <div class="admin-nav">
+            <a asp-controller="Dashboard" asp-action="Index" class="active"><svg class="icon"><use href="#i-grid"></use></svg><span>Tổng quan</span></a>
+            <a asp-controller="Users" asp-action="Index"><svg class="icon"><use href="#i-users"></use></svg><span>Người dùng</span></a>
+            <a asp-controller="Posts" asp-action="Index"><svg class="icon"><use href="#i-comment"></use></svg><span>Bài viết</span></a>
+            <a asp-controller="Topics" asp-action="Index"><svg class="icon"><use href="#i-tag"></use></svg><span>Chủ đề</span></a>
+        </div>
+    </div>
+
+    <div class="admin-stats-grid">
+        <div class="archive-card admin-stat-card"><strong>@Model.UserCount</strong><span>Tổng user</span></div>
+        <div class="archive-card admin-stat-card"><strong>@Model.ActiveUserCount</strong><span>User hoạt động</span></div>
+        <div class="archive-card admin-stat-card"><strong>@Model.LockedUserCount</strong><span>User bị khóa</span></div>
+        <div class="archive-card admin-stat-card"><strong>@Model.PostCount</strong><span>Tổng bài viết</span></div>
+        <div class="archive-card admin-stat-card"><strong>@Model.HiddenPostCount</strong><span>Bài viết bị ẩn</span></div>
+        <div class="archive-card admin-stat-card"><strong>@Model.CommentCount</strong><span>Bình luận</span></div>
+        <div class="archive-card admin-stat-card"><strong>@Model.ReportCount</strong><span>Tổng báo cáo</span></div>
+        <div class="archive-card admin-stat-card"><strong>@Model.PendingReportCount</strong><span>Báo cáo chờ xử lý</span></div>
+    </div>
+</section>

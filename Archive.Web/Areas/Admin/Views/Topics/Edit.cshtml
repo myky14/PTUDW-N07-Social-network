@@ -1,0 +1,43 @@
+@model Archive.Web.ViewModels.Admin.EditTopicViewModel
+@{
+    ViewData["Title"] = "Sửa topic";
+}
+
+<section class="page-shell narrow-page">
+    <div class="archive-card edit-shell-card">
+        <span class="eyebrow-pill">Edit topic</span>
+        <h1 class="page-title mt-3">Chỉnh sửa chủ đề</h1>
+        <form asp-action="Save" method="post">
+            @Html.AntiForgeryToken()
+            <input asp-for="Id" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control form-control-soft" />
+                <span asp-validation-for="Name" class="text-danger small"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Slug" class="form-label"></label>
+                <input asp-for="Slug" class="form-control form-control-soft" />
+                <span asp-validation-for="Slug" class="text-danger small"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control form-control-soft" rows="4"></textarea>
+            </div>
+            <div class="form-check mb-4">
+                <input asp-for="IsVisible" class="form-check-input" />
+                <label asp-for="IsVisible" class="form-check-label"></label>
+            </div>
+            <button type="submit" class="btn btn-primary rounded-pill px-4">
+                <svg class="icon"><use href="#i-edit"></use></svg>
+                <span>Lưu thay đổi</span>
+            </button>
+            <a asp-action="Index" class="btn btn-soft rounded-pill px-4">Quay lại</a>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
