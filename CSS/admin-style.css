@@ -1,0 +1,210 @@
+/* --- ADMIN STYLE --- */
+
+/* 1. Fix Body & Background */
+/* Set nền + màu chữ global cho admin page
+!important để override Bootstrap/theme */
+.admin-body {
+    background-color: #f5eee9 !important; /* Màu kem index */
+    color: #46332c;
+}
+
+/* 2. Fix Header Đồng bộ Index & Lỗi xuống dòng */
+.archive-header {
+    background-color: rgba(245, 238, 233, 0.95) !important; /* Màu kem đặc trưng */
+    border-bottom: 1px solid rgba(121, 91, 74, 0.12) !important;
+}
+
+.brand-logo {
+    font-family: 'Inter', sans-serif; /* Giữ Inter cho Logo hiện đại */
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #2f2420;
+}
+
+.header-badge {
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(214, 160, 127, 0.25);
+    border-radius: 16px;
+    background: #f6eee9;
+    color: #d6a17f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Icon Quản trị viên */
+.admin-profile-icon {
+    width: 35px;
+    height: 35px;
+    background-color: #eee2dc;
+    color: #795d4a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    border: 1px solid rgba(121, 91, 74, 0.1);
+}
+
+/* Nút Đăng xuất kiểu Pastel */
+.header-logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid #d69096; /* Viền hồng pastel */
+    color: #d69096 !important;
+    background: transparent;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.header-logout-btn:hover {
+    background-color: #d69096;
+    color: white !important;
+}
+
+.btn-outline-dark {
+    border: 1px solid rgba(121, 91, 74, 0.18) !important;
+    color: #2f2420 !important;
+}
+
+.btn-outline-dark:hover {
+    background-color: #eee2dc !important;
+    color: #2f2420 !important;
+}
+
+.management-title {
+    font-family: 'Playfair Display', serif !important; /* Font điệu giống logo Archive */
+    color: #46332c;
+    font-weight: 800;
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Tự động co giãn cho đẹp */
+    letter-spacing: -1px;
+}
+
+/* 3. TIÊU DIỆT MÀU XANH CỦA TABS - CHUYỂN SANG PASTEL */
+/* Tabs dạng pill container */
+.custom-admin-tabs {
+    background-color: #fffaf7;
+    padding: 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(121, 91, 74, 0.18);
+    display: inline-flex;
+}
+
+.custom-admin-tabs .nav-link {
+    color: #795d4a !important;
+    font-weight: 600;
+    border-radius: 999px !important;
+    padding: 10px 25px !important;
+    border: none !important;
+    background-color: transparent !important;
+    transition: 0.3s ease;
+}
+
+/* Ép màu hồng Pastel khi Active - No Blue anymore! */
+.custom-admin-tabs .nav-link.active {
+    background-color: #d69096 !important; /* Màu hồng đất */
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(214, 144, 150, 0.3);
+}
+
+/* 4. Stat Cards (Tổng quan) */
+.admin-stat-card {
+    background-color: #fffaf7;
+    height: 100%;
+    padding: 2rem;
+    border-radius: 24px;
+    border: 1px solid rgba(121, 91, 74, 0.18);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.admin-stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(121, 91, 74, 0.05);
+}
+
+.stat-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #8a736c;
+    display: block;
+}
+
+.stat-value {
+    font-weight: 800;
+    color: #46332c;
+    margin-top: 0.5rem;
+}
+
+.pink-icon { 
+    color: #d69096; 
+    font-size: 1.5rem; 
+}
+
+/* 5. Table Style */
+.admin-table-container {
+    background-color: #fffaf7;
+    padding: 1.5rem;
+    border-radius: 24px;
+    border: 1px solid rgba(121, 91, 74, 0.18);
+}
+
+.table {
+    --bs-table-bg: transparent;
+}
+
+.avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    background-color: #f5eee9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #795d4a;
+}
+
+/* Nút xử lý hồng pastel */
+.btn-pink-admin {
+    background-color: #d69096;
+    color: white;
+    border-radius: 999px;
+    padding: 8px 20px;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-pink-admin:hover {
+    background-color: #be7079;
+    color: white;
+}
+
+/* Badge trạng thái */
+.status-pending { background-color: #d69096 !important; color: white; }
+.status-resolved { background-color: #795d4a !important; color: white; }
+
+.btn-outline-brown {
+    border: 1px solid #795d4a;
+    color: #795d4a;
+    border-radius: 999px;
+    padding: 6px 15px;
+    background: transparent;
+}
+
+/* Làm đẹp thanh cuộn cho toàn trang hoặc riêng vùng table */
+.table-responsive {
+    scrollbar-width: thin; /* Cho Firefox: làm thanh cuộn mỏng đi */
+    scrollbar-color: #d69096 transparent; /* Màu hồng pastel cho thanh cuộn */
+}
+
+
