@@ -1,68 +1,312 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Layout Trang Chủ</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- CSS -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container-fluid">
-
     <!-- HEADER -->
-    <div class="row">
-        <div class="col-12 bg-dark text-center" style="height: 80px;">
-            HEADER
+    <header class="archive-header">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="row align-items-center py-3">
+
+            <!-- LEFT -->
+            <div class="col-4 d-flex align-items-center">
+                <div class="brand-logo">ARCHIVE</div>
+            </div>
+
+            <!-- CENTER -->
+            <div class="col-4 d-flex justify-content-center align-items-center">
+                <div class="header-badge">
+                    <i class="bi bi-stars"></i>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="col-4 d-flex justify-content-end align-items-center">
+                <div class="header-actions">
+                    <a href="#" class="header-search-btn" title="Tìm kiếm">
+                        <i class="bi bi-search"></i>
+                    </a>
+
+                    <a href="#" class="header-star-btn" title="About us">
+                        <i class="bi bi-star"></i>
+                    </a>
+
+                    <a href="login.html" class="header-login-btn" title="Đăng nhập">
+                        <i class="bi bi-person"></i>
+                        <span>Đăng nhập</span>
+                    </a>
+
+                    <a href="register.html" class="header-register-btn" title="Đăng ký">
+                        <i class="bi bi-plus-lg"></i>
+                        <span>Đăng ký</span>
+                    </a>
+                </div>
+            </div>
+
         </div>
     </div>
+</header>
 
-    <!-- MAIN -->
-    <div class="row mt-3">
+    <!-- HERO / LANDING -->
+    <section class="hero-section d-flex align-items-center">
+        <div class="container">
+            <div class="hero-wrap position-relative">
+                <div class="floating-shape shape-left-top"></div>
+                <div class="floating-shape shape-right-top"></div>
 
-        <!-- LEFT -->
-        <div class="col-md-2">
-            <div class="bg-light p-3 mb-3" style="min-height: 200px;">
-                <h5>MENU</h5>
-            </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="text-center hero-content">
+                            <div class="hero-pill d-inline-flex align-items-center gap-2 mb-4">
+                                <span class="mini-star"><i class="bi bi-stars"></i></span>
+                                <span>MỘT NƠI ĐỂ NÓI KHẼ</span>
+                            </div>
 
-            <div class="bg-light p-3" style="min-height: 200px;">
-                <h5>VIBE</h5>
+                            <h1 class="hero-title">ARCHIVE</h1>
+
+                            <p class="hero-subtitle mx-auto">
+                                Viết vài dòng ngắn, giữ lại vài cảm xúc nhỏ và lướt trong một không gian gọn, nhẹ, mềm.
+                            </p>
+
+                            <div class="hero-divider mx-auto mb-4"></div>
+
+                            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 mb-5">
+                                <button class="btn hero-main-btn" onclick="scrollToFeed()">Bắt đầu</button>
+                                <a href="login.html" class="btn hero-outline-btn">Đăng nhập</a>
+                            </div>
+
+                            <div class="hero-stats mx-auto">
+                                <div class="row g-0">
+                                    <div class="col-4">
+                                        <div class="stat-box">
+                                            <h4>5.000+</h4>
+                                            <p>người dùng mẫu</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="stat-box">
+                                            <h4>60.000+</h4>
+                                            <p>bài viết</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="stat-box">
+                                            <h4>400+</h4>
+                                            <p>chủ đề</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="scroll-down mt-5" onclick="scrollToFeed()">
+                                <span>Xem bài đăng</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-        <!-- CENTER -->
-        <div class="col-md-7 bg-white" style="min-height: 400px;">
-            MAIN CONTENT
-        </div>
+    <!-- FEED SECTION -->
+    <section id="feed-section" class="feed-section py-5">
+        <div class="container-fluid px-3 px-lg-4">
+            <div class="row g-4">
 
-        <!-- RIGHT -->
-        <div class="col-md-3">
-            <div class="bg-light p-3 mb-3" style="min-height: 300px;">
-                <h5>GỢI Ý</h5>
+                <!-- LEFT SIDEBAR -->
+                <div class="col-lg-1 d-none d-lg-block">
+                    <aside class="left-sidebar d-flex flex-column align-items-center gap-4">
+                        <div class="sidebar-logo">
+                            <i class="bi bi-circle-square"></i>
+                        </div>
+                        <a href="#" class="sidebar-icon active"><i class="bi bi-house-door-fill"></i></a>
+                        <a href="#" class="sidebar-icon"><i class="bi bi-search"></i></a>
+                        <a href="#" class="sidebar-icon"><i class="bi bi-plus-square"></i></a>
+                        <a href="#" class="sidebar-icon"><i class="bi bi-heart"></i></a>
+                        <a href="#" class="sidebar-icon"><i class="bi bi-person"></i></a>
+                        <a href="#" class="sidebar-icon mt-auto"><i class="bi bi-pin-angle"></i></a>
+                    </aside>
+                </div>
+
+                <!-- MAIN FEED -->
+                <div class="col-lg-7 col-md-8">
+                    <div class="feed-title text-center mb-4">Trang chủ</div>
+
+                    <div class="bg-white p-3 p-md-4 mb-4 post-composer">
+                        <div class="d-flex gap-3 align-items-start">
+                            <img src="https://i.pravatar.cc/60?img=12" class="avatar" alt="avatar">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-2 fw-semibold">Bạn đang nghĩ gì?</h6>
+                                <textarea class="form-control composer-input" rows="3" placeholder="Viết vài dòng cho hôm nay..."></textarea>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <small class="text-muted">Chia sẻ một điều ngắn thôi cũng được.</small>
+                                    <button class="btn btn-pink px-4">Đăng</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white post-card mb-3">
+                        <div class="p-3 p-md-4">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex gap-3">
+                                    <img src="https://i.pravatar.cc/60?img=32" class="avatar" alt="avatar">
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                                            <span class="fw-semibold">linh.ng</span>
+                                            <span class="text-muted small">3 giờ</span>
+                                        </div>
+                                        <p class="post-text mb-2">
+                                            Hôm nay mình chỉ muốn viết một câu thật ngắn:
+                                            “Có những ngày yên bình cũng là một kiểu hạnh phúc.”
+                                        </p>
+                                        <div class="post-actions d-flex gap-4">
+                                            <button type="button"><i class="bi bi-heart"></i> 12</button>
+                                            <button type="button"><i class="bi bi-chat"></i> 4</button>
+                                            <button type="button"><i class="bi bi-arrow-repeat"></i> 2</button>
+                                            <button type="button"><i class="bi bi-send"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="more-btn"><i class="bi bi-three-dots"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white post-card mb-3">
+                        <div class="p-3 p-md-4">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex gap-3">
+                                    <img src="https://i.pravatar.cc/60?img=15" class="avatar" alt="avatar">
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                                            <span class="fw-semibold">trang.vo</span>
+                                            <span class="text-muted small">5 giờ</span>
+                                        </div>
+                                        <p class="post-text mb-2">
+                                            Có ai cũng thích giao diện tối giản như Threads không?
+                                            Nhìn ít màu nhưng lại rất dễ chịu.
+                                        </p>
+                                        <div class="post-actions d-flex gap-4">
+                                            <button type="button"><i class="bi bi-heart"></i> 9</button>
+                                            <button type="button"><i class="bi bi-chat"></i> 3</button>
+                                            <button type="button"><i class="bi bi-arrow-repeat"></i> 1</button>
+                                            <button type="button"><i class="bi bi-send"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="more-btn"><i class="bi bi-three-dots"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white post-card mb-3">
+                        <div class="p-3 p-md-4">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex gap-3">
+                                    <img src="https://i.pravatar.cc/60?img=25" class="avatar" alt="avatar">
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                                            <span class="fw-semibold">archive.demo</span>
+                                            <span class="text-muted small">8 giờ</span>
+                                        </div>
+                                        <p class="post-text mb-2">
+                                            Một giao diện tốt không cần quá nhiều chi tiết,
+                                            chỉ cần đủ rõ, đủ nhẹ và đủ đồng bộ.
+                                        </p>
+                                        <div class="post-actions d-flex gap-4">
+                                            <button type="button"><i class="bi bi-heart"></i> 16</button>
+                                            <button type="button"><i class="bi bi-chat"></i> 6</button>
+                                            <button type="button"><i class="bi bi-arrow-repeat"></i> 4</button>
+                                            <button type="button"><i class="bi bi-send"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="more-btn"><i class="bi bi-three-dots"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white post-card mb-3">
+                        <div class="p-3 p-md-4">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex gap-3">
+                                    <img src="https://i.pravatar.cc/60?img=48" class="avatar" alt="avatar">
+                                    <div>
+                                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                                            <span class="fw-semibold">mai.pham</span>
+                                            <span class="text-muted small">12 giờ</span>
+                                        </div>
+                                        <p class="post-text mb-2">
+                                            Archive có thể là nơi lưu lại mẩu chuyện nhỏ,
+                                            cảm xúc nhỏ, và những dòng ngắn không cần quá phô trương.
+                                        </p>
+                                        <div class="post-actions d-flex gap-4">
+                                            <button type="button"><i class="bi bi-heart"></i> 21</button>
+                                            <button type="button"><i class="bi bi-chat"></i> 7</button>
+                                            <button type="button"><i class="bi bi-arrow-repeat"></i> 3</button>
+                                            <button type="button"><i class="bi bi-send"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="more-btn"><i class="bi bi-three-dots"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT PANEL -->
+                <div class="col-lg-4 col-md-4 mt-4 mt-md-0">
+                    <div class="bg-light login-card p-4">
+                        <h2 class="login-card-title text-center mb-3">
+                            Đăng nhập hoặc đăng ký Archive
+                        </h2>
+                        <p class="text-center login-card-text mb-4">
+                            Xem mọi người đang lưu lại điều gì và tham gia vào những cuộc trò chuyện nhỏ.
+                        </p>
+
+                        <button type="button" class="username-login-btn w-100">
+                            Đăng nhập bằng tên người dùng
+                        </button>
+                    </div>
+
+                    <div class="feed-footer text-center mt-4">
+                        <small>
+                            © 2026 Archive · Điều khoản · Chính sách riêng tư · Chính sách cookie
+                        </small>
+                    </div>
+                </div>
+
             </div>
-
-            <div class="bg-light p-3" style="min-height: 100px;">
-                <h5>TOPIC</h5>
-            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- FOOTER -->
-    <div class="row mt-3">
-        <div class="col-12 bg-dark text-center" style="height: 200px;">
-            FOOTER
-        </div>
-    </div>
+    <script>
+        function scrollToFeed() {
+            document.getElementById("feed-section").scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    </script>
 
-</div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
